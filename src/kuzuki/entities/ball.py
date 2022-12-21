@@ -6,12 +6,12 @@ from .. import constants as CONST
 
 
 class Ball:
-    window = pygame.Surface
-    is_sticky = bool
-    paddle = Paddle
-    color = pygame.Color
-    radius = int
-    center_position = Vector2
+    window: pygame.Surface
+    is_sticky: bool
+    paddle: Paddle
+    color: pygame.Color
+    radius: int
+    center_position: Vector2
     def __init__(
             self,
             window: pygame.Surface,

@@ -6,6 +6,11 @@ from ..typing import Dimension
 
 
 class Brick:
+    window: pygame.Surface
+    color: pygame.Color
+    position: Vector2
+    width: int
+    height: int
     def __init__(
         self, 
         window: pygame.Surface, 
