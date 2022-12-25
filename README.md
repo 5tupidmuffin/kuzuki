@@ -13,7 +13,7 @@ $ python3 -m src.kuzuki  # running it as a MODULE NOT AS A SCRIPT
 OR
 
 ```shell
-$ bash start.sh  # this assumes you have a virtual env named .venv + pygame installed in it
+$ ./start.sh  # this assumes you have a virtual env named .venv + pygame installed in it
 ```
 
 ## References
