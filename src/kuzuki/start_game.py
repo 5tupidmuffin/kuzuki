@@ -29,9 +29,7 @@ def start_game() -> t.NoReturn:
     )
 
     # event loop
-    while is_running:
-        clock.tick(60)  # capping the framerate at 60
-        
+    while is_running:        
         window.fill(CONST.BLACK_COLOR)
         paddle.render()
         for brick in bricks:
@@ -43,4 +41,5 @@ def start_game() -> t.NoReturn:
                 is_running = False
 
         pygame.display.update()
+        clock.tick(60)  # capping the framerate at 60
     exit(0)
