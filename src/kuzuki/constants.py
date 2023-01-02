@@ -1,3 +1,4 @@
+# flake8: noqa
 from pygame import Color
 from pygame.math import Vector2
 
