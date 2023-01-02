@@ -4,7 +4,7 @@ from pygame.math import Vector2
 from . import __version__
 from . import typing as kuzuki_types
 
-
+# fmt: off
 NAME                     = "KUZUKI"
 VERSION                  = __version__
 SCREEN_SIZE              = 200
@@ -22,6 +22,7 @@ GOLD_COLOR               = Color(194, 133, 10)
 GREEN_COLOR              = Color(10, 133, 51)
 LIME_COLOR               = Color(194, 194, 41)
 BLUE_COLOR               = Color(10, 133, 194)
+# fmt: on
 
 BRICK_DIMENSIONS: kuzuki_types.Dimension = {
     "WIDTH": 50,
@@ -34,11 +35,10 @@ BRICK_COLUMN_MARGIN = 5
 
 PADDLE_DIMENSIONS = BRICK_DIMENSIONS
 PADDLE_START_POSITION = Vector2(
-    (SCREEN_WIDTH // 2) - PADDLE_DIMENSIONS["WIDTH"], SCREEN_HEIGHT - (SCREEN_HEIGHT // 5)
+    (SCREEN_WIDTH // 2) - PADDLE_DIMENSIONS["WIDTH"],
+    SCREEN_HEIGHT - (SCREEN_HEIGHT // 5),
 )
 PADDLE_SPEED = 10
 
-BALL_DIMENSIONS = {
-    "RADIUS": 7
-}
+BALL_DIMENSIONS = {"RADIUS": 7}
 BALL_SPEED = 4

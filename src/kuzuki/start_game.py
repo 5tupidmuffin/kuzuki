@@ -29,7 +29,7 @@ def start_game() -> t.NoReturn:
     )
 
     # event loop
-    while is_running:        
+    while is_running:
         window.fill(CONST.BLACK_COLOR)
         paddle.render()
         for brick in bricks:
