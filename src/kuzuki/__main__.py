@@ -11,16 +11,13 @@ except ImportError as exc:
         )
         exit(1)
 
-    if isinstance(exc, ImportError):
-        # ran it like a script
-        print(
-            """
-            please run this as a MODULE NOT as a script,
-            with `python3 -m src.kuzuki`
+    print(
         """
-        )
-        exit(1)
-    raise exc
+        please run this as a MODULE NOT as a script,
+        with `python3 -m src.kuzuki`
+        """
+    )
+    exit(1)
 
 
 start_game()
