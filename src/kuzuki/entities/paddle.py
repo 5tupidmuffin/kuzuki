@@ -26,9 +26,13 @@ class Paddle:
 
     def update_position_on_input(self) -> None:
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT] and self.position.x != 0:
+        if keys[pygame.K_LEFT] and self.position.x != CONST.BORDER_THICKNESS:
             self.position.x -= CONST.PADDLE_SPEED
-        if keys[pygame.K_RIGHT] and self.position.x + self.width != CONST.SCREEN_WIDTH:
+        if (
+            keys[pygame.K_RIGHT]
+            and self.position.x + self.width
+            != CONST.SCREEN_WIDTH - CONST.BORDER_THICKNESS
+        ):
             self.position.x += CONST.PADDLE_SPEED
 
     def get_rect_from_position(self, position: Vector2) -> pygame.Rect:
