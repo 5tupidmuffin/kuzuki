@@ -30,4 +30,4 @@ class BorderRects:
 
     def render(self) -> None:
         for rect in self.rects:
-            pygame.draw.rect(self.window, CONST.WHITE_COLOR, rect)
+            pygame.draw.rect(self.window, CONST.BORDER_COLOR, rect)

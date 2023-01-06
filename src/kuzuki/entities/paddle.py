@@ -18,7 +18,7 @@ class Paddle:
         start_position: Vector2 = CONST.PADDLE_START_POSITION,
     ):
         self.window = window
-        self.color = CONST.BLUE_COLOR
+        self.color = CONST.PADDLE_COLOR
         self.width = CONST.PADDLE_DIMENSIONS["WIDTH"]
         self.height = CONST.PADDLE_DIMENSIONS["HEIGHT"]
         self.position = start_position

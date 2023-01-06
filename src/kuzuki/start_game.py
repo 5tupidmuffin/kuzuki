@@ -6,7 +6,7 @@ from pygame.math import Vector2
 from . import constants as CONST
 from .entities.paddle import Paddle
 from .entities.ball import Ball
-from .entities.brick import get_bricks
+from .entities.brick import BricksContainer
 from .entities.border_rects import BorderRects
 
 
@@ -17,12 +17,13 @@ def start_game() -> t.NoReturn:
     clock = pygame.time.Clock()
 
     is_running = True
+
     paddle = Paddle(window)
-    bricks = get_bricks(window)
+    bricks = BricksContainer(window)
+    bricks_rects = [brick.rect for brick in bricks.bricks]
     borders = BorderRects(window)
-    collidable_rects = [brick.rect for brick in bricks] + [
-        rect for rect in borders.rects
-    ]
+    borders_rects = [rect for rect in borders.rects]
+    collidable_rects = bricks_rects + borders_rects
     ball = Ball(
         window,
         Vector2(
@@ -37,8 +38,7 @@ def start_game() -> t.NoReturn:
     while is_running:
         window.fill(CONST.BLACK_COLOR)
         paddle.render()
-        for brick in bricks:
-            brick.render()
+        bricks.render()
         borders.render()
         ball.render()
 

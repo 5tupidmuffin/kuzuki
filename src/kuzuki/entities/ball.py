@@ -40,7 +40,7 @@ class Ball:
         self.is_sticky = True
         self.paddle = paddle
         self.collidable_rects = collidable_rects
-        self.color = CONST.BLUE_COLOR
+        self.color = CONST.BALL_COLOR
         self.radius = CONST.BALL_DIMENSIONS["RADIUS"]
         self.center_position = start_position
         self.acceleration = self.get_first_random_acc() * CONST.BALL_SPEED
