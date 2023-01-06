@@ -43,7 +43,7 @@ class Ball:
         self.color = CONST.BALL_COLOR
         self.radius = CONST.BALL_DIMENSIONS["RADIUS"]
         self.center_position = start_position
-        self.acceleration = self.get_first_random_acc() * CONST.BALL_SPEED
+        self.acceleration = self.get_first_random_acc()
         self.rect = self.get_rect_from_center_position(self.center_position)
 
     def get_stick_position(self) -> Vector2:
@@ -84,7 +84,7 @@ class Ball:
         random_direction_vec.y = (up_vec.x * math.sin(random_angle_rad)) + (
             up_vec.y * math.cos(random_angle_rad)
         )
-        return random_direction_vec.normalize()
+        return random_direction_vec.normalize() * CONST.BALL_SPEED
 
     def get_reflection_vector(self, entity: pygame.Rect) -> Vector2:
         clip = self.rect.clip(entity)
@@ -105,15 +105,17 @@ class Ball:
     def render(self) -> None:
         self.update_position_on_input()
 
+        if self.is_sticky:
+            self.center_position = self.get_stick_position()
+        else:
+            self.center_position += self.acceleration
+
         self.rect = self.get_rect_from_center_position(self.center_position)
         collided_entity = self.get_collided_with()
 
         if collided_entity:
             self.change_direction_on_collide(collided_entity)
 
-        if self.is_sticky:
-            self.center_position = self.get_stick_position()
-        else:
-            self.center_position += self.acceleration
+        self.rect = self.get_rect_from_center_position(self.center_position)
 
         pygame.draw.circle(self.window, self.color, self.center_position, self.radius)
