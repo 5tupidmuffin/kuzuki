@@ -39,11 +39,13 @@ class GameOverScreen:
         self.rect = pygame.Rect(Vector2(0, 0), (self.width, self.height))
         self.rect.center = self.window.get_rect().center
         self.text = "GAME OVER - PRESS [R] TO RESET"
-        self.font = pygame.font.SysFont(None, 40)
-        self.text_display = self.font.render(self.text, True, CONST.RED_COLOR)
+        self.font = pygame.font.SysFont(None, CONST.GAME_OVER_FONT_SIZE)
+        self.text_display = self.font.render(
+            self.text, True, CONST.GAME_OVER_FONT_COLOR
+        )
 
     def render(self) -> None:
-        pygame.draw.rect(self.window, CONST.WHITE_COLOR, self.rect)
+        pygame.draw.rect(self.window, CONST.GAME_OVER_BACKGROUND_COLOR, self.rect)
         self.window.blit(
             self.text_display,
             self.text_display.get_rect(center=self.window.get_rect().center),
