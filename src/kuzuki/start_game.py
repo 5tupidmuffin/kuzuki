@@ -73,6 +73,11 @@ def start_game() -> t.NoReturn:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 is_running = False
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
+                # reset requested
+                lives_count = CONST.DEFAULT_LIVES_COUNT
+                paddle.position = CONST.PADDLE_START_POSITION
+                ball.is_sticky = True
 
         pygame.display.update()
         clock.tick(60)  # capping the framerate at 60
