@@ -8,7 +8,7 @@ from .entities.paddle import Paddle
 from .entities.ball import Ball
 from .entities.brick import BricksContainer
 from .entities.border_rects import BorderRects
-from .entities.text_display import TextDisplay
+from .entities.text_display import TextDisplay, GameOverScreen
 
 
 def check_for_death(ball_rect: pygame.Rect) -> bool:
@@ -32,6 +32,7 @@ def start_game() -> t.NoReturn:
     lives_display = TextDisplay(
         window, Vector2(CONST.BORDER_THICKNESS + 5, CONST.BORDER_THICKNESS + 5)
     )
+    game_over_screen = GameOverScreen(window)
 
     paddle = Paddle(window)
 
@@ -67,7 +68,7 @@ def start_game() -> t.NoReturn:
             lives_count -= 1
             reset_ball(ball)
         if lives_count == 0:
-            exit()
+            game_over_screen.render()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
