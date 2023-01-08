@@ -48,6 +48,7 @@ class Ball:
         self.center_position = start_position
         self.acceleration = self.get_first_random_acc()
         self.rect = self.get_rect_from_center_position(self.center_position)
+        self.collision_count = 0
 
     def get_stick_position(self) -> Vector2:
         return Vector2(
@@ -111,11 +112,15 @@ class Ball:
     def change_direction_on_collide(self, entity: pygame.Rect) -> None:
         # https://stackoverflow.com/a/55412058
         # https://matthew-brett.github.io/teaching/rotation_2d.html
-        reflection_vector = self.get_reflection_vector(entity).normalize()
-        self.acceleration = reflection_vector * CONST.BALL_SPEED
+        reflection_vector = self.get_reflection_vector(entity)
+        self.acceleration = reflection_vector
 
     def is_rect_from_bricks_rects(self, rect: pygame.Rect) -> bool:
         return rect in self.bricks_rects
+
+    def update_acc_based_on_collision_count(self) -> None:
+        if self.collision_count in (4, 12, 20):
+            self.acceleration *= CONST.BALL_SPEED_MULTIPLIER
 
     def render(self) -> None:
         self.update_position_on_input()
@@ -129,7 +134,9 @@ class Ball:
         collided_entity = self.get_collided_with()
 
         if collided_entity:
+            self.collision_count += 1
             self.change_direction_on_collide(collided_entity)
+            self.update_acc_based_on_collision_count()
 
         self.rect = self.get_rect_from_center_position(self.center_position)
 
