@@ -69,9 +69,9 @@ class Ball:
         did_collide_with_paddle = self.rect.colliderect(self.paddle.rect)
         if did_collide_with_paddle:
             return self.paddle.rect
-        collided_brick_idx = self.rect.collidelist(self.collidable_rects)
-        if collided_brick_idx != -1:
-            return self.collidable_rects[collided_brick_idx]
+        collided_rect_idx = self.rect.collidelist(self.collidable_rects)
+        if collided_rect_idx != -1:
+            return self.collidable_rects[collided_rect_idx]
         return None
 
     def get_first_random_acc(self) -> Vector2:
