@@ -114,6 +114,9 @@ class Ball:
         reflection_vector = self.get_reflection_vector(entity).normalize()
         self.acceleration = reflection_vector * CONST.BALL_SPEED
 
+    def is_rect_from_bricks_rects(self, rect: pygame.Rect) -> bool:
+        return rect in self.bricks_rects
+
     def render(self) -> None:
         self.update_position_on_input()
 
@@ -127,10 +130,6 @@ class Ball:
 
         if collided_entity:
             self.change_direction_on_collide(collided_entity)
-            if collided_entity in self.bricks_rects:
-                self.bricks_rects = list(
-                    filter(lambda x: x != collided_entity, self.bricks_rects)
-                )
 
         self.rect = self.get_rect_from_center_position(self.center_position)
 
