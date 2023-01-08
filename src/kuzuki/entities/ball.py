@@ -22,6 +22,7 @@ class Ball:
     window: pygame.Surface
     is_sticky: bool
     paddle: Paddle
+    bricks_rects: t.List[pygame.Rect]
     collidable_rects: t.List[pygame.Rect]
     color: pygame.Color
     radius: int
@@ -34,11 +35,13 @@ class Ball:
         window: pygame.Surface,
         start_position: Vector2,
         paddle: Paddle,
+        bricks_rects: t.List[pygame.Rect],
         collidable_rects: t.List[pygame.Rect],
     ):
         self.window = window
         self.is_sticky = True
         self.paddle = paddle
+        self.bricks_rects = bricks_rects
         self.collidable_rects = collidable_rects
         self.color = CONST.BALL_COLOR
         self.radius = CONST.BALL_DIMENSIONS["RADIUS"]
@@ -66,9 +69,23 @@ class Ball:
             self.is_sticky = False
 
     def get_collided_with(self) -> t.Union[pygame.Rect, None]:
+        # paddle
         did_collide_with_paddle = self.rect.colliderect(self.paddle.rect)
         if did_collide_with_paddle:
             return self.paddle.rect
+
+        # bricks
+        collided_brick_idx = self.rect.collidelist(self.bricks_rects)
+        if collided_brick_idx != -1:
+            collided_brick_rect = self.bricks_rects[collided_brick_idx]
+            self.bricks_rects = [
+                brick_rect
+                for idx, brick_rect in enumerate(self.bricks_rects)
+                if idx != collided_brick_idx
+            ]
+            return collided_brick_rect
+
+        # any other
         collided_rect_idx = self.rect.collidelist(self.collidable_rects)
         if collided_rect_idx != -1:
             return self.collidable_rects[collided_rect_idx]

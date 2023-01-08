@@ -17,6 +17,7 @@ except ImportError as exc:
         with `python3 -m src.kuzuki`
         """
     )
+    # BUG: circular import will also print above statement
     exit(1)
 
 

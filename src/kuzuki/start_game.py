@@ -36,14 +36,6 @@ def start_game() -> t.NoReturn:
 
     paddle = Paddle(window)
 
-    bricks = BricksContainer(window)
-    bricks_rects = [brick.rect for brick in bricks.bricks]
-
-    borders = BorderRects(window)
-    borders_rects = [rect for rect in borders.rects]
-
-    collidable_rects = bricks_rects + borders_rects
-
     ball = Ball(
         window,
         Vector2(
@@ -51,8 +43,19 @@ def start_game() -> t.NoReturn:
             paddle.position.y - CONST.BALL_DIMENSIONS["RADIUS"],
         ),
         paddle,
-        collidable_rects,
+        [],  # will set later
+        [],  # will set later
     )
+
+    bricks = BricksContainer(window, ball)
+
+    borders = BorderRects(window)
+    borders_rects = [rect for rect in borders.rects]
+
+    collidable_rects = borders_rects
+
+    ball.bricks_rects = bricks.get_bricks_rects()
+    ball.collidable_rects = collidable_rects
 
     # event loop
     while is_running:
@@ -77,6 +80,8 @@ def start_game() -> t.NoReturn:
                 # reset requested
                 lives_count = CONST.DEFAULT_LIVES_COUNT
                 paddle.position = CONST.PADDLE_START_POSITION
+                bricks.reset_visibility_for_all()
+                ball.bricks_rects = bricks.get_bricks_rects()
                 ball.is_sticky = True
 
         pygame.display.update()

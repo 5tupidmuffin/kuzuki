@@ -4,6 +4,7 @@ import pygame
 from pygame.math import Vector2
 
 from .. import constants as CONST
+from .ball import Ball
 from ..typing import Dimension
 
 
@@ -14,6 +15,7 @@ class Brick:
     width: int
     height: int
     rect: pygame.Rect
+    ball: Ball
 
     def __init__(
         self,
@@ -21,6 +23,7 @@ class Brick:
         color: pygame.Color,
         position: Vector2,
         dimentions: Dimension,
+        ball: Ball,
     ):
         self.window = window
         self.color = color
@@ -28,14 +31,30 @@ class Brick:
         self.width = dimentions["WIDTH"]
         self.height = dimentions["HEIGHT"]
         self.rect = pygame.Rect(self.position, (self.width, self.height))
+        self.ball = ball
+        self.is_visible = True
+
+    def update_visibility_on_collide(self) -> None:
+        if not self.is_visible:
+            return
+        did_collide_with_ball = self.rect.colliderect(self.ball.rect)
+        if did_collide_with_ball:
+            self.is_visible = False
 
     def render(self) -> None:
-        pygame.draw.rect(self.window, self.color, self.rect)
+        self.update_visibility_on_collide()
+        if self.is_visible:
+            pygame.draw.rect(self.window, self.color, self.rect)
 
 
 class BricksContainer:
-    def __init__(self, window: pygame.Surface):
+    window: pygame.Surface
+    ball: Ball
+    bricks: t.List[Brick]
+
+    def __init__(self, window: pygame.Surface, ball: Ball):
         self.window = window
+        self.ball = ball
         self.bricks = self.get_bricks()
 
     def get_bricks(self) -> t.List[Brick]:
@@ -58,6 +77,7 @@ class BricksContainer:
                     CONST.COLOR_MAP[i],
                     start_position,
                     CONST.BRICK_DIMENSIONS,
+                    self.ball,
                 )
                 bricks.append(brick)
                 start_position.x += (
@@ -69,6 +89,13 @@ class BricksContainer:
                 CONST.BRICK_DIMENSIONS["HEIGHT"] + CONST.BRICK_ROW_MARGIN
             )
         return bricks
+
+    def reset_visibility_for_all(self) -> None:
+        for brick in self.bricks:
+            brick.is_visible = True
+
+    def get_bricks_rects(self) -> t.List[pygame.Rect]:
+        return [brick.rect for brick in self.bricks]
 
     def render(self) -> None:
         for brick in self.bricks:
