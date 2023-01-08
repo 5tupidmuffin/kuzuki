@@ -78,11 +78,6 @@ class Ball:
         collided_brick_idx = self.rect.collidelist(self.bricks_rects)
         if collided_brick_idx != -1:
             collided_brick_rect = self.bricks_rects[collided_brick_idx]
-            self.bricks_rects = [
-                brick_rect
-                for idx, brick_rect in enumerate(self.bricks_rects)
-                if idx != collided_brick_idx
-            ]
             return collided_brick_rect
 
         # any other
@@ -132,6 +127,10 @@ class Ball:
 
         if collided_entity:
             self.change_direction_on_collide(collided_entity)
+            if collided_entity in self.bricks_rects:
+                self.bricks_rects = list(
+                    filter(lambda x: x != collided_entity, self.bricks_rects)
+                )
 
         self.rect = self.get_rect_from_center_position(self.center_position)
 
