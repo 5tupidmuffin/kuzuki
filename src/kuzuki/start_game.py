@@ -112,7 +112,7 @@ def start_game() -> t.NoReturn:
                 paddle.position = CONST.PADDLE_START_POSITION
                 bricks.reset_visibility_for_all()
                 ball.bricks_rects = bricks.get_bricks_rects()
-                ball.is_sticky = True
+                ball.reset()
 
         pygame.display.update()
         clock.tick(60)  # capping the framerate at 60

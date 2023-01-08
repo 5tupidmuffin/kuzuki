@@ -122,6 +122,11 @@ class Ball:
         if self.collision_count in (4, 12, 20):
             self.acceleration *= CONST.BALL_SPEED_MULTIPLIER
 
+    def reset(self) -> None:
+        self.is_sticky = True
+        self.collision_count = 0
+        self.acceleration = self.get_first_random_acc()
+
     def render(self) -> None:
         self.update_position_on_input()
 
